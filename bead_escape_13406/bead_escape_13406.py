@@ -10,9 +10,11 @@ def bfs():
         answer +=1
         print(q)
         
+        red_in = False
+        blue_in = False
+        
         red = q.pop()
         blue = q.pop()
-        print(red, blue)
         
         # 4방향을 탐색
         for dir in range(4):
@@ -20,9 +22,6 @@ def bfs():
             ny_r = red[1]+dy[dir]
             nx_b = blue[0]+dx[dir]
             ny_b = blue[1]+dy[dir]
-            
-            print(nx_r, ny_r)
-            print(nx_b, ny_b)
             
             # 만약 길이 있으면
             if board[ny_r][nx_r] == "." or board[ny_b][nx_b] == "." or board[ny_r][nx_r] == "O" or board[ny_b][nx_b] == "O":
@@ -44,7 +43,19 @@ def bfs():
                         ny_b = ny_b + dy[dir]
                         if board[ny_b][nx_b] == "O":
                             blue_in =  True
-                print(nx_r, ny_r, nx_b, ny_r)
+                # 끝까지 이동 완료 -> 검사 실시
+                
+                # 만약 파란 공이 들어감 -> 다른 방향 탐색 필요
+                if blue_in:
+                    continue
+                # 목표 달성시 종료
+                if red_in:
+                    return
+                # 다음 방향 탐색
+                q.append((nx_r, ny_r))
+                q.append((nx_b, ny_b))
+                        
+                
                 
             #     # 만약 공이 들어가면 이번 케이스는 종료
             #     if red_in or blue_in:
